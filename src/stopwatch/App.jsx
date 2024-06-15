@@ -44,6 +44,7 @@ const App = () => {
 
 
 
+
    const handleStart = async() => {
     if(!isRunning){
       setIsRunning(true)
@@ -51,18 +52,13 @@ const App = () => {
   
       miliInterval.current = setInterval(() => {
         setMili((prevValue) =>{
+         if(prevValue >= 99){
+          setSec(prevSec => prevSec + 1)
+         } else {
           return prevValue + 1
+        }
         })
       }, 10);
-
-      timeInterval.current = setInterval(() => {
-        
-        
-        setSec((prevValue) =>{
-          return prevValue + 1
-        })
-      }, 1000);
-
       
 
     }
@@ -70,6 +66,7 @@ const App = () => {
     
   } 
   console.log(sec)
+  
   const handlePause=()=>{
     setIsRunning(false)
     clearInterval(miliInterval.current)
@@ -88,7 +85,7 @@ const App = () => {
   return (
     <div>
       <h1>Stopwatch</h1> <br />
-      <h2>{sec}:{`${mili < 100 ? mili : setMili(0)}`}</h2> <br />
+      <h2>{`${String(sec).padStart(2 , '0')}`}:{`${mili < 100 ? String(mili).padStart(2 , '0') : setMili(0)}`}</h2> <br />
       <button onClick={handleStart}>Start</button>
       <button onClick={handlePause}>Pause</button>
       <button onClick={handleReset}>Reset</button>
