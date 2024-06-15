@@ -1,4 +1,4 @@
-// //stopwatch
+//stopwatch
 // import React, { useEffect, useRef, useState } from 'react'
 
 // const App = () => {
@@ -10,12 +10,12 @@
 //             clearInterval(timehandle)
 //         }
 //     },)
-    
+
 //     function timehandler(){
 //      timehandle = setInterval(() => {
 //            setTime(preValue=>preValue+1)
-//         }, 1000);
-        
+//         }, 50);
+
 //     }
 //     const pause = () => {
 //         clearInterval(timehandle)
@@ -32,14 +32,70 @@
 
 // export default App
 
-
-import React from 'react'
-import "./App.css"
+import React, { useEffect, useRef, useState } from 'react'
 
 const App = () => {
-  return (
+
+  const [mili, setMili] = useState(0)
+  const [isRunning , setIsRunning] = useState(false)
+  const timeInterval = useRef(0)
+  const miliInterval = useRef(0)
+  const [sec, setSec] = useState(0)
+
+
+
+   const handleStart = async() => {
+    if(!isRunning){
+      setIsRunning(true)
+
+  
+      miliInterval.current = setInterval(() => {
+        setMili((prevValue) =>{
+          return prevValue + 1
+        })
+      }, 10);
+
+      timeInterval.current = setInterval(() => {
+        
+        
+        setSec((prevValue) =>{
+          return prevValue + 1
+        })
+      }, 1000);
+
+      
+
+    }
+
     
+  } 
+  console.log(sec)
+  const handlePause=()=>{
+    setIsRunning(false)
+    clearInterval(miliInterval.current)
+    clearInterval(timeInterval.current)
+  }
+
+  const handleReset=()=>{
+    clearInterval(timeInterval.current)
+    clearInterval(miliInterval.current)
+    setIsRunning(false)
+    setMili(0)
+    setSec(0)
+    
+  }
+
+  return (
+    <div>
+      <h1>Stopwatch</h1> <br />
+      <h2>{sec}:{`${mili < 100 ? mili : setMili(0)}`}</h2> <br />
+      <button onClick={handleStart}>Start</button>
+      <button onClick={handlePause}>Pause</button>
+      <button onClick={handleReset}>Reset</button>
+    </div>
   )
 }
 
 export default App
+
+
