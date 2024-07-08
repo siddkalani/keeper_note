@@ -38,7 +38,6 @@ const App = () => {
 
   const [mili, setMili] = useState(0)
   const [isRunning , setIsRunning] = useState(false)
-  const timeInterval = useRef(0)
   const miliInterval = useRef(0)
   const [sec, setSec] = useState(0)
 
@@ -70,11 +69,9 @@ const App = () => {
   const handlePause=()=>{
     setIsRunning(false)
     clearInterval(miliInterval.current)
-    clearInterval(timeInterval.current)
   }
 
   const handleReset=()=>{
-    clearInterval(timeInterval.current)
     clearInterval(miliInterval.current)
     setIsRunning(false)
     setMili(0)
